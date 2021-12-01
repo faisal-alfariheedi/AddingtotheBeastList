@@ -8,12 +8,39 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    @IBOutlet weak var inp: UITextField!
+    @IBOutlet weak var table: UITableView!
+    var list=["lion","cat","tiger","whale"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        table.dataSource=self
         // Do any additional setup after loading the view.
     }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
 
+    @IBAction func beastadd(_ sender: UIButton) {
+        list.insert(String(inp.text!), at: list.count)
+        table.reloadData()
+    }
+    
+}
 
+extension ViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return list.count
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath)
+                // set text label to the model that is corresponding to the row in array
+            cell.textLabel?.text = list[indexPath.row]
+        return cell
+    }
+    
+    
 }
 
